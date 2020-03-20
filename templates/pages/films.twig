@@ -4,8 +4,47 @@
 {% block body %}
     <div class="jumbotron jumbotron-fluid">
         <div class="container">
-            <h1 class="display-4">Voici tout les </h1>
-            <p class="lead">{{ current_view }}</p>
+            <h1 class="display-4">Voici tout les {{ current_view }}</h1>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+        {% for film in films %}
+            <div class="col-12">
+                <div class="row">
+                    <div class="col-2">
+                        <img src="https://www.joomlack.fr/images/demo.jpg" alt="test" style="width: 60px; height: 60px;"/>
+                    </div>
+                    <div class="col-1">
+                        <h5>{{ film.nom }}</h5>
+                    </div>
+                    <div class="col-1">
+                        <p>{{ film.description }}</p>
+                    </div>
+                    <div class="col-1">
+                        <p>{{ film.tag }}</p>
+                    </div>
+                    <div class="col-1">
+                        <p>{{ film.duree }}</p>
+                    </div>
+                    <div class="col-1">
+                        <p>{{ film.directeur }}</p>
+                    </div>
+                    <div class="col-1">
+                        <p>{{ film.producteur }}</p>
+                    </div>
+                    <div class="col-1">
+                        <p>{{ film.acteurs }}</p>
+                    </div>
+                    <div class="col-1">
+                        <button class="bg-primary"><a class="text-info" href="{{ path('singlefilm', {slug: film.slug, id: film.id}) }}">Update</a></button>
+                    </div>
+                    <div class="col-1">
+                        <button class="bg-secondary">Delete</button>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
         </div>
     </div>
 {% endblock %}

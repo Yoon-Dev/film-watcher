@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Cocur\Slugify\Slugify;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -74,6 +75,11 @@ class Video
     public function getNom(): ?string
     {
         return $this->nom;
+    }
+
+    public function slug(): ?string
+    {
+        return (new Slugify())->slugify($this->nom);
     }
 
     public function setNom(string $nom): self

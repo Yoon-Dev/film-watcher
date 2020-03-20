@@ -6,6 +6,11 @@ films:
     path: /films
     controller: App\Controller\FilmsController::index 
 
+singlefilm:
+    path: /singlefilm/{slug}/{id}
+    controller: App\Controller\FilmsController::single 
+
+
 series:
     path: /series
     controller: App\Controller\SeriesController::index 
