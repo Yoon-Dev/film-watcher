@@ -10,9 +10,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Doctrine\Common\Persistence\ObjectManager;
-
-
-
+use App\Utils\Contains;
 
 
 class FilmsController extends AbstractController{
@@ -27,11 +25,16 @@ class FilmsController extends AbstractController{
      * @var ObjectManager
      */
     private $em;
+    /**
+     * @var Contains
+     */
+    private $utils;
 // °°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°
     // CONSTRUCT
 // °°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°
     public function __construct(VideoRepository $repo, ObjectManager $em)
     {
+        $this->utils = new Contains();
         $this->em = $em;
         $this->videorepository = $repo;
     }  
@@ -40,22 +43,24 @@ class FilmsController extends AbstractController{
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     public function index(): Response
     {
+        $tags = [];
+        // Creer un entité qui va représenté la recherche
+        // Créer un formulaire
+        // Gérér le traitement dans le formulaire
 
         $films = $this->videorepository->findBy(['type' => "film"]);
-        // $film = new Video();
-        // $film->setNom('Serie')
-        //     ->setDescription('Description')
-        //     ->setType('serie')
-        //     ->setTag('test')
-        //     ->setDuree(120)
-        //     ->setProducteur('Warner Bros')
-        //     ->setActeurs(('Leonardo Didi'))
-        //     ->setDirecteur('Directeur Directeur');
-        // $em = $this->getDoctrine()->getManager();
-        // $em->persist($film);
-        // $em->flush();
+        foreach ($films as $k => $v) {
 
+            $tmp_tag = explode(",", $v->getTag());
+            foreach ($tmp_tag as $k => $v) {
+                if($this->utils->contains($v,$tags)){
+                    array_push($tags, $v);
+                }
+            }
+
+        }
         return $this->render('pages/films.twig', [
+            'tags' => $tags,
             'current_view' => 'films',
             'films' => $films
         ]);

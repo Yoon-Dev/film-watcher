@@ -1,0 +1,12 @@
+<form method="post" action="?">
+    <input type="text" name="nom" placeholder="titre" /> 
+    <select name="tag" >
+    {% for tag in tags  %}
+        <option value="{{ tag }}">{{ tag }}</option>
+    {%  endfor %}
+    </select>
+    <input type="text" name="acteurs" placeholder="acteurs" /> 
+    <input type="text" name="directeur" placeholder="directeur" /> 
+    <input type="text" name="producteur" placeholder="producteur" /> 
+    <button class="btn btn-secondary">Filtrer</button>
+</form>
