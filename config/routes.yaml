@@ -6,9 +6,19 @@ films:
     path: /films
     controller: App\Controller\FilmsController::index 
 
+films.add:
+    path: /films/new
+    controller: App\Controller\FilmsController::add 
+
+films.delete:
+    path: /singlefilm/{slug}/{id}
+    controller: App\Controller\FilmsController::delete
+    methods: DELETE
+
 singlefilm:
     path: /singlefilm/{slug}/{id}
     controller: App\Controller\FilmsController::single 
+    methods: GET|POST
 
 
 series:

@@ -4,7 +4,8 @@ namespace App\Entity;
 
 use Cocur\Slugify\Slugify;
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\Form\FormTypeInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\VideoRepository")
  */
@@ -48,6 +49,8 @@ class Video
     private $tag;
 
     /**
+     * @Assert\GreaterThan(5)
+     * @Assert\Positive
      * @ORM\Column(type="integer")
      */
     private $duree;

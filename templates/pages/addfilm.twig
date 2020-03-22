@@ -1,10 +1,10 @@
 {% extends "base.html.twig" %} 
-{% block title 'Single Film' %}
+{% block title 'Add film' %}
     
 {% block body %}
     <div class="jumbotron jumbotron-fluid">
         <div class="container">
-            <h1 class="display-4">Voici le film {{ film.nom }}</h1>
+            <h1 class="display-4">Ajouter un film</h1>
         </div>
     </div>
     {{ form_start(form) }}
@@ -15,11 +15,7 @@
             </div>
             <div class="col-md-4 col-12">
                 {{ form_row(form.description) }}
-            </div>
-            <div class="col-md-4 col-12">
-                {{ form_row(form.type) }}
-            </div>
-            
+            </div>           
             <div class="col-md-4 col-12">
                 {{ form_row(form.tag) }}
             </div>
@@ -36,7 +32,7 @@
                 {{ form_row(form.acteurs) }}
             </div> 
             <div class="col-12 d-flex justify-content-center">
-                <button class="btn btn-primary">Update</button>
+                <button class="btn btn-primary">Add</button>
             </div>          
         </div>
     </div>
