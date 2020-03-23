@@ -3,26 +3,26 @@ home:
     controller: App\Controller\HomeController::index 
 
 films:
-    path: /films
+    path: /admin/films
     controller: App\Controller\FilmsController::index 
 
 films.add:
-    path: /films/new
+    path: /admin/films/new
     controller: App\Controller\FilmsController::add 
 
 films.delete:
-    path: /films/detail/{slug}/{id}
+    path: /admin/films/detail/{slug}/{id}
     controller: App\Controller\FilmsController::delete
     methods: DELETE
 
 singlefilm:
-    path: /films/detail/{slug}/{id}
+    path: /admin/films/detail/{slug}/{id}
     controller: App\Controller\FilmsController::single 
     methods: GET|POST
 
 
 series:
-    path: /series
+    path: /admin/series
     controller: App\Controller\SeriesController::index 
 
 login:
@@ -32,6 +32,23 @@ login:
 logout:
     path: /logout
 
+tag:
+    path: /admin/tag
+    controller: App\Controller\TagController::index
+
+tag.add:
+    path: /admin/tag/new
+    controller: App\Controller\TagController::new
+   
+tag.detail.edit:
+    path: /admin/tag/{id}/edit
+    controller: App\Controller\TagController::edit
+  
+tag.delete:
+    path: /admin/tag/{id}
+    controller: App\Controller\TagController::delete
+    methods: DELETE
+  
 #index:
 #    path: /
 #    controller: App\Controller\DefaultController::index

@@ -12,7 +12,10 @@ security:
         main:
             anonymous: lazy
             provider: from_database
+
+            # their is lame http basic 
             # http_basic: true
+            
             logout:
                 path: /logout
                 target: /
@@ -28,7 +31,7 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        - { path: ^/films, roles: ROLE_ADMIN }
+        - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
     encoders:
     #     Symfony\Component\Security\Core\User\User: plaintext

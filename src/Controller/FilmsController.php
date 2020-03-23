@@ -3,6 +3,8 @@ namespace App\Controller;
 
 use App\Entity\Video;
 use App\Form\VideoType;
+use App\Entity\VideoSearch;
+use App\Form\VideoSearchType;
 use App\Repository\VideoRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -11,7 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Doctrine\Common\Persistence\ObjectManager;
 use App\Utils\Contains;
-
+use PhpParser\Builder\Property;
 
 class FilmsController extends AbstractController{
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -29,26 +31,37 @@ class FilmsController extends AbstractController{
      * @var Contains
      */
     private $utils;
+
+    /**
+     * @var VideoSearch
+     */
+    private $search;
 // °°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°
     // CONSTRUCT
 // °°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°
     public function __construct(VideoRepository $repo, ObjectManager $em)
     {
         $this->utils = new Contains();
+        $this->search = new VideoSearch();
         $this->em = $em;
         $this->videorepository = $repo;
     }  
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     // fonctionnalité
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    public function index(): Response
+    public function index(Request $request): Response
     {
+
+        
+        $form = $this->createForm(VideoSearchType::class, $this->search);
+        $form->handleRequest($request);
+
         $tags = [];
         // Creer un entité qui va représenté la recherche
         // Créer un formulaire
         // Gérér le traitement dans le formulaire
-
-        $films = $this->videorepository->findBy(['type' => "film"]);
+        // $films = $this->videorepository->findBy(['type' => "film", "nom" => "Pirate des caraibes"]);
+        $films = $this->videorepository->findByQuery($this->search);
         foreach ($films as $k => $v) {
 
             $tmp_tag = explode(",", $v->getTag());
@@ -62,7 +75,8 @@ class FilmsController extends AbstractController{
         return $this->render('pages/films.twig', [
             'tags' => $tags,
             'current_view' => 'films',
-            'films' => $films
+            'films' => $films,
+            'form' => $form->createView()
         ]);
     }
 // °°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°

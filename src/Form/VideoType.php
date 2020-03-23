@@ -3,6 +3,9 @@
 namespace App\Form;
 
 use App\Entity\Video;
+use App\Entity\Tag;
+
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -22,7 +25,11 @@ class VideoType extends AbstractType
             ->add('description')
             ->add('serie_id')
             ->add('soustitre_id')
-            ->add('tag')
+            ->add('tags', EntityType::class, [
+                'class' => Tag::class,
+                'choice_label' => 'nom',
+                'multiple' => true
+            ])
             ->add('duree')
             ->add('directeur')
             ->add('producteur')

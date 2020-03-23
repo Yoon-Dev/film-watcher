@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Video;
+use App\Entity\VideoSearch;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
@@ -19,32 +20,25 @@ class VideoRepository extends ServiceEntityRepository
         parent::__construct($registry, Video::class);
     }
 
-    // /**
-    //  * @return Video[] Returns an array of Video objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @return Video[] Returns an array of User objects
+     */
+    public function findByQuery(VideoSearch $videosearch)
     {
-        return $this->createQueryBuilder('v')
-            ->andWhere('v.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('v.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+        $q = $this->createQueryBuilder('u')
+            ->where('u.type = :val')
+            ->setParameter('val', 'film');
+            if($videosearch->getNom()){
+                dump('oui');
+                $q = $q->where('u.type = :val')
+                  ->andWhere('u.nom = :nom')
+                  ->setParameter('val', 'film')
+                  ->setParameter('nom', $videosearch->getNom()); 
+            }
+            // add test for tag class !!
+        $q = $q->getQuery()
+        ->getResult();
+        return $q;
     }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?Video
-    {
-        return $this->createQueryBuilder('v')
-            ->andWhere('v.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
+    
 }
