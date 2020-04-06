@@ -1,3 +1,7 @@
-#index:
-#    path: /
-#    controller: App\Controller\DefaultController::index
+admin.all:
+    path: /admin/all
+    controller: App\Controller\MovieController::index
+
+admin.movie.create:
+    path: /admin/movie/create
+    controller: App\Controller\MovieController::createMovie
