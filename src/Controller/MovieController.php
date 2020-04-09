@@ -29,7 +29,6 @@ class MovieController extends AbstractController
     public function index(): Response
     {
         $all = $this->movierepo->findAll();
-        dump($all);
         return $this->render('pages/admin.all.html.twig', [
             'movies' => $all
         ]);
@@ -40,7 +39,8 @@ class MovieController extends AbstractController
     {
         $newmovie = new Movie();
         $form = $this->createForm(MovieType::class, $newmovie);
-
+        $newmovie->setFilename('not done yet, video file');
+        // $newmovie->setImageName('not done yet');       
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $this->em->persist($newmovie);
@@ -71,6 +71,7 @@ class MovieController extends AbstractController
     public function deleteMovie(Movie $movie, Request $request): Response
     {
         $this->em->remove($movie);
+        $movie->setImageName('b');
         $this->em->flush();
         return $this->redirectToRoute('admin.all');
     }
