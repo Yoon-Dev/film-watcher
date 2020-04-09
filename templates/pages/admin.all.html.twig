@@ -4,9 +4,38 @@
     <div class="container">
         <div class="row">
             <div class="col-12">
-                <button class="btn btn-primary"><a class="text-decoration-none text-center text-white" href="{{ path('admin.movie.create') }}">Ajouter un film</a></button>
+                <a class="text-decoration-none text-center text-white" href="{{ path('admin.movie.create') }}"><button class="btn btn-primary">Ajouter un film</button></a>
             </div>
+            {% for movie in movies %}
+            <div class="col-12 my-2">
+                <div class="row border p-3">
+                    <div class="col-2 border-right d-flex justify-content-center align-items-center">
+                        <h3>{{movie.name}}</h3>
+                    </div>
+                    <div class="col-2 border-right d-flex justify-content-center align-items-center">
+                        <p class="m-0">{{movie.realisateur}}</p>
+                    </div>
+                    <div class="col-2 border-right d-flex justify-content-center align-items-center">
+                        <p class="m-0">{{movie.acteurs}}</p>
+                    </div>
+                    <div class="col-2 border-right d-flex justify-content-center align-items-center">
+                        <p class="m-0">option over here</p>
+                    </div>
+                    <div class="col-2 border-right d-flex justify-content-center align-items-center">
+                        <p class="m-0">{{movie.duree}}</p>
+                    </div>
+                    <div class="col-1 border-right d-flex justify-content-center align-items-center">
+                        <a class="text-decoration-none text-center text-white" href="{{ path('admin.movie.edit', { 'id': movie.id }) }}"><button class="btn btn-primary">Edit</button></a>
+                    </div>
+                    <div class="col-1">
+                        <a class="text-decoration-none text-center text-white dellink" onclick="return confirm('are u sure?')" href="{{ path('admin.movie.delete', { 'id': movie.id }) }}"><button class="btn btn-danger">Delete</button></a>
+                    </div>           
+                </div>
+            </div>
+            {% endfor %}
         </div>
     </div>
-    <h1>{{number}}</h1>
+{% endblock %}
+{% block javascripts %}
+    <script src="/js/utils.js"/>
 {% endblock %}

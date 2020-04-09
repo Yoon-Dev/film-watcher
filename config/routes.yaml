@@ -5,3 +5,11 @@ admin.all:
 admin.movie.create:
     path: /admin/movie/create
     controller: App\Controller\MovieController::createMovie
+
+admin.movie.edit:
+    path: /admin/movie/edit/{id}
+    controller: App\Controller\MovieController::editMovie
+
+admin.movie.delete:
+    path: /admin/movie/delete/{id}
+    controller: App\Controller\MovieController::deleteMovie

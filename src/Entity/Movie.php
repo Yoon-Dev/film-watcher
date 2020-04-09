@@ -36,6 +36,11 @@ class Movie
      */
     private $filename;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $realisateur;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -85,6 +90,18 @@ class Movie
     public function setFilename(string $filename): self
     {
         $this->filename = $filename;
+
+        return $this;
+    }
+
+    public function getRealisateur(): ?string
+    {
+        return $this->realisateur;
+    }
+
+    public function setRealisateur(string $realisateur): self
+    {
+        $this->realisateur = $realisateur;
 
         return $this;
     }
