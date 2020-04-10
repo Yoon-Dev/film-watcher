@@ -2,6 +2,9 @@
 
 namespace App\Entity;
 
+use App\Entity\Tag;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -36,11 +39,6 @@ class Movie
     private $acteurs;
 
     /**
-     * @ORM\Column(type="string", length=2048)
-     */
-    private $filename;
-
-    /**
      * @ORM\Column(type="string", length=255)
      */
     private $realisateur;
@@ -66,6 +64,44 @@ class Movie
      * @var \DateTimeInterface|null
      */
     private $image_updated_at;
+// ++++++++++++++++++++++++++++++++++++++++++++++
+// MOVIE
+// ++++++++++++++++++++++++++++++++++++++++++++++
+        /**
+     * NOTE: This is not a mapped field of entity metadata, just a simple property.
+     * 
+     * @Vich\UploadableField(mapping="movie_video", fileNameProperty="video_name")
+     * @var File|null
+     */
+    private $videoFile;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     *
+     * @var string|null
+     */
+    private $video_name;
+
+    /**
+     * @ORM\Column(type="datetime")
+     * @var \DateTimeInterface|null
+     */
+    private $video_updated_at;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Tag", inversedBy="movies")
+     * @ORM\JoinTable(name="movie_tag",
+     *     joinColumns={@ORM\JoinColumn(name="movie_id", referencedColumnName="id")}
+     *     )
+     */
+    private $tags;
+
+
+    public function __construct()
+    {
+        $this->tags = new ArrayCollection();
+        // get all the tag
+    }
 
     public function getId(): ?int
     {
@@ -104,18 +140,6 @@ class Movie
     public function setActeurs(string $acteurs): self
     {
         $this->acteurs = $acteurs;
-
-        return $this;
-    }
-
-    public function getFilename(): ?string
-    {
-        return $this->filename;
-    }
-
-    public function setFilename(string $filename): self
-    {
-        $this->filename = $filename;
 
         return $this;
     }
@@ -169,4 +193,73 @@ class Movie
 
         return $this;
     }
+// ++++++++++++++++++++++++++++++++++++++++++++++
+// VIDEO
+// ++++++++++++++++++++++++++++++++++++++++++++++
+    public function getVideoFile(): ?File
+    {
+        return $this->videoFile;
+    }
+
+    public function setVideoFile(File $videoFile): self
+    {
+        $this->videoFile = $videoFile;
+        if ($this->videoFile instanceof UploadedFile) {
+            $this->video_updated_at = new \DateTime('now');
+        }
+        return $this;
+    }
+
+    public function getVideoName(): ?string
+    {
+        return $this->video_name;
+    }
+
+    public function setVideoName(?string $video_name): self
+    {
+        $this->video_name = $video_name;
+
+        return $this;
+    }
+
+    public function getVideoUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->video_updated_at;
+    }
+
+    public function setVideoUpdatedAt(\DateTimeInterface $video_updated_at): self
+    {
+        $this->video_updated_at = $video_updated_at;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Tag[]
+     */
+    public function getTags(): Collection
+    {
+        return $this->tags;
+    }
+
+    public function addTag(Tag $tag): self
+    {
+        if (!$this->tags->contains($tag)) {
+            $this->tags[] = $tag;
+            $tag->addMovie($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTag(Tag $tag): self
+    {
+        if ($this->tags->contains($tag)) {
+            $this->tags->removeElement($tag);
+            $tag->removeMovie($this);
+        }
+
+        return $this;
+    }
+
 }

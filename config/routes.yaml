@@ -13,3 +13,21 @@ admin.movie.edit:
 admin.movie.delete:
     path: /admin/movie/delete/{id}
     controller: App\Controller\MovieController::deleteMovie
+# °°°°°°°°°°°°°°°°°°°°°°
+#  Tag
+# °°°°°°°°°°°°°°°°°°°°°°
+admin.tag.all:
+    path: /admin/tag/all
+    controller: App\Controller\TagController::index
+
+admin.tag.create:
+    path: /admin/tag/create
+    controller: App\Controller\TagController::createTag
+
+admin.tag.edit:
+    path: /admin/tag/edit/{id}
+    controller: App\Controller\TagController::editTag
+
+admin.tag.delete:
+    path: /admin/tag/delete/{id}
+    controller: App\Controller\TagController::deleteTag

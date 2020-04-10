@@ -5,6 +5,10 @@ vich_uploader:
             uri_prefix: /images/movies
             upload_destination: '%kernel.project_dir%/public/images/movies'
             namer: Vich\UploaderBundle\Naming\UniqidNamer
+        movie_video:
+            uri_prefix: /video/movies
+            upload_destination: '%kernel.project_dir%/public/video/movies'
+            namer: Vich\UploaderBundle\Naming\UniqidNamer
 
     #mappings:
     #    products:

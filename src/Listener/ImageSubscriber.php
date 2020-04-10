@@ -41,6 +41,7 @@ class ImageSubscriber implements EventSubscriber {
                 return;
             }
             $this->fileSystem->remove(getcwd().$this->uploaderHelper->asset($entity, 'imageFile'));
+            $this->fileSystem->remove(getcwd().$this->uploaderHelper->asset($entity, 'videoFile'));
 
         }
 

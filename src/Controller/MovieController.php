@@ -2,6 +2,7 @@
 // src/Controller/LuckyController.php
 namespace App\Controller;
 use App\Entity\Movie;
+use App\Entity\Tag;
 use App\Form\MovieType;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -18,12 +19,16 @@ class MovieController extends AbstractController
      * @var ObjectManager
      */
     private $movierepo;
+    /**
+     * @var ObjectManager
+     */
+    private $tagrepo;
 
     public function __construct(EntityManagerInterface $em)
     {
         $this->em = $em;
         $this->movierepo = $em->getRepository(Movie::class);
-
+        $this->tagrepo = $em->getRepository(Tag::class);
     }
 
     public function index(): Response
@@ -38,8 +43,8 @@ class MovieController extends AbstractController
     public function createMovie(Request $request): Response
     {
         $newmovie = new Movie();
+        // $tag = new Tag();
         $form = $this->createForm(MovieType::class, $newmovie);
-        $newmovie->setFilename('not done yet, video file');
         // $newmovie->setImageName('not done yet');       
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {

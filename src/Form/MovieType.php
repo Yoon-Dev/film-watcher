@@ -3,6 +3,8 @@
 namespace App\Form;
 
 use App\Entity\Movie;
+use App\Entity\Tag;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -19,6 +21,12 @@ class MovieType extends AbstractType
             ->add('acteurs')
             ->add('realisateur')
             ->add('imageFile', FileType::class)
+            ->add('videoFile', FileType::class)
+            ->add('tags', EntityType::class, [
+                'class' => Tag::class,
+                'choice_label' => 'name',
+                'multiple' => true
+            ])
             ->add('edit', SubmitType::class)
         ;
     }

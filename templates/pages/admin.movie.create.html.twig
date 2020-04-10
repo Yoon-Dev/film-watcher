@@ -1,10 +1,10 @@
 {% extends 'base.html.twig' %}
 {% block title %}All{% endblock %}
 {% block body %}
-    <div class="container">
+    <div class="container">     
         <div class="row">
-            <div class="col-12">
-                <a class="text-decoration-none text-center text-white" href="{{ path('admin.all') }}"><button class="btn btn-primary">Get back</button></a>
+            <div class="col-12 d-flex justify-content-center align-items-center mt-4">
+                <h1>Create new MOVIE</h1>
             </div>
             <div class="col-12 d-flex justify-content-center align-items-center mt-4">
                 {{ form(form) }}
