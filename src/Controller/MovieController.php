@@ -34,6 +34,7 @@ class MovieController extends AbstractController
     public function index(): Response
     {
         $all = $this->movierepo->findAll();
+        dump($all);
         return $this->render('pages/admin.all.html.twig', [
             'movies' => $all
         ]);

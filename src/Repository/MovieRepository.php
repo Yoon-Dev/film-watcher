@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Movie;
+use App\Entity\Tag;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -19,16 +20,17 @@ class MovieRepository extends ServiceEntityRepository
         parent::__construct($registry, Movie::class);
     }
 
-    // /**
-    //  * @return Movie[] Returns an array of Movie objects
-    //  */
+    /**
+     * @return Movie[] Returns an array of Movie objects
+    */
     
-    public function test()
+    public function findMovies()
     {
         return $this->createQueryBuilder('m')
-            ->select('id')
-            ->from('movie', 'm')
-            ->leftJoin('inversedBy', 'mt', 'ON', 'm.id = mt.movie_id')
+            ->select('m.id, m.name, m.duree, m.acteurs, m.realisateur, m.image_name, m.video_name')
+            // ->addSelect('t.id, t.name')
+            // ->from('App\Entity\Tag', 't')
+            ->innerJoin('m.tags', 't')         
             ->getQuery()
             ->getResult()
         ;

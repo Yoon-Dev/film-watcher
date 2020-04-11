@@ -31,3 +31,9 @@ admin.tag.edit:
 admin.tag.delete:
     path: /admin/tag/delete/{id}
     controller: App\Controller\TagController::deleteTag
+# °°°°°°°°°°°°°°°°°°°°°°
+#  API
+# °°°°°°°°°°°°°°°°°°°°°°
+api.movies:
+    path: /api/movies
+    controller: App\Controller\ApiController::index

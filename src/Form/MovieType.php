@@ -20,8 +20,12 @@ class MovieType extends AbstractType
             ->add('duree')
             ->add('acteurs')
             ->add('realisateur')
-            ->add('imageFile', FileType::class)
-            ->add('videoFile', FileType::class)
+            ->add('imageFile', FileType::class, [
+                'required' => false
+            ])
+            ->add('videoFile', FileType::class, [
+                'required' => false
+            ])
             ->add('tags', EntityType::class, [
                 'class' => Tag::class,
                 'choice_label' => 'name',
